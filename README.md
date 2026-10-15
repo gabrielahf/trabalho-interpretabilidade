@@ -177,3 +177,29 @@ São 383 pacientes, sem valores ausentes. Usamos 15 variáveis (idade, numérica
 | KNN (k = 7) | 0,909 | 0,818 | 0,837 | 0,970 |
 
 Treino, validação e teste ficam a menos de 2 pontos de distância nos três modelos. Em 50 divisões diferentes, a acurácia média fica entre 86% e 88%.
+
+---
+
+## Análise da interpretabilidade
+
+**Árvore de Decisão.** A árvore escolhida tem profundidade 2 e quatro regras: risco alto → recorre (100% no treino), risco intermediário → recorre (62%), risco baixo e homem → não recorre (80%), risco baixo e mulher → não recorre (96%). O risco responde por 97% da importância de Gini e o sexo pelo restante. Isso faz sentido, porque o risco é uma classificação médica (American Thyroid Association) que já resume tumor, linfonodos e metástase. Em 200 reamostragens, o risco foi a primeira pergunta em 98% das vezes, mas a segunda variável mudou entre amostras.
+
+**Naive Bayes.** As probabilidades condicionais mostram quanto cada característica muda a chance de recorrência: risco alto multiplica por 65, linfonodos laterais (N1b) por 7,5 e sexo masculino por 3,9, enquanto o tumor micropapilífero divide por 17. Como a decisão é uma soma em escala logarítmica, a contribuição de cada variável em cada paciente é exata. O problema é a suposição de independência: risco, T, N e estádio descrevem o mesmo tumor, e o modelo conta essa evidência várias vezes, o que deixa as probabilidades exageradas.
+
+**KNN.** O KNN não tem regras nem pesos para inspecionar. Ele vota com os 7 vizinhos mais parecidos, a distância não diz qual variável aproximou os pacientes e todas as variáveis pesam igual. Com SHAP e LIME, vimos que ele usa o mesmo que os outros modelos: risco, linfonodos (N e adenopatia) e tamanho do tumor (T).
+
+**Caso exemplo.** Um paciente do teste (homem, 80 anos, tumor T4a, sem linfonodos, risco intermediário) teve recorrência, e os três modelos acertaram com confianças diferentes. A árvore deu 62%, porque só olhou o risco. O Naive Bayes deu 99,998%, porque somou T4a, idade e estádio, que já inclui o tumor e a idade. O KNN deu 57%, porque 4 dos 7 vizinhos recorreram: o risco e a idade puxaram para cima e a ausência de linfonodos puxou para baixo. Calibrado, o Naive Bayes cai para 78%.
+
+## Comparação e discussão
+
+**Os resultados fazem sentido em relação ao problema?** Sim. As variáveis mais importantes (risco, linfonodos, tamanho do tumor, metástase e focalidade) são as que a diretriz médica usa para estimar a recorrência, e as direções batem. O único ponto estranho foi o fumo (razão de 4,9 no NB): 82% dos fumantes são homens, e sem essa variável a acurácia não muda, então é uma associação, não uma causa.
+
+**Os três modelos concordam sobre as variáveis mais relevantes?** No topo, sim: o risco é a variável nº 1 nos oito rankings (Gini, permutação, SHAP e razão do NB). Depois disso, a árvore usa só o sexo, enquanto o NB e o KNN distribuem o peso entre linfonodos, adenopatia, T e focalidade. Os três dão a mesma resposta em 87% dos pacientes do teste.
+
+**Quais ferramentas foram usadas em cada modelo?** Árvore: desenho da árvore, regras, caminho do paciente e importância de Gini. Naive Bayes: prioris, probabilidades condicionais, razões de verossimilhança e decomposição da decisão. KNN: lista dos vizinhos mais próximos. Nos três: importância por permutação, SHAP e LIME.
+
+**O que essas ferramentas permitiram compreender?** A estrutura da árvore mostrou que quatro regras baseadas no risco já alcançam 88% de acurácia. As probabilidades do NB mostraram o peso de cada característica e por que ele exagera. Os vizinhos e o SHAP explicaram o KNN. A permutação revelou que N, T e adenopatia são redundantes entre si. E as ferramentas também revelaram o vazamento da resposta ao tratamento, que vira a variável nº 1 nos três modelos quando é usada.
+
+**Quais são as limitações de cada modelo para a interpretabilidade?** A árvore só é legível se for pequena, ignora variáveis informativas e muda com a amostra. O Naive Bayes tem probabilidades exageradas (77% das previsões acima de 99% ou abaixo de 1%) e, nas categorias raras, o valor exato da razão depende da suavização (risco alto vai de ×33 a ×641). O KNN não tem explicação própria, depende de SHAP e LIME, que são aproximações, e seu recall é instável (média de 72% em 50 divisões).
+
+**Desafio final: como a interpretabilidade ajuda a usar as previsões de forma mais consciente?** Ela mostrou que a melhor métrica (95%, com a resposta ao tratamento) vinha de um modelo que olhava o futuro, que modelos com acurácias parecidas usam a informação de formas diferentes e quando desconfiar de uma previsão, como nos 99,998% do Naive Bayes. Uma previsão sozinha ("vai recorrer") não pode ser questionada. Já uma previsão explicada ("vai recorrer porque o tumor é T4a e o paciente tem 80 anos, embora não tenha linfonodos") pode ser verificada, questionada e corrigida por quem decide. A principal limitação do trabalho é que os dados vêm de um único hospital, e o modelo precisaria ser testado em outra população antes de qualquer uso real.

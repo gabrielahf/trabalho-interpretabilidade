@@ -4,8 +4,6 @@ __pycache__/
 *.pyc
 
 # materiais de entrega que não fazem parte do código
-relatorio/
 slides/
-relatorio_overleaf.zip
 roteiro_apresentacao.md
 link_video.txt
