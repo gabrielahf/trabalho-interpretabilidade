@@ -160,13 +160,29 @@ O `main.py` chama uma função por etapa do enunciado:
 
 São 383 pacientes, sem valores ausentes. Usamos 15 variáveis (idade, numérica, e 14 categóricas) para prever a recorrência (sim/não), que acontece em 28% dos casos.
 
-## Principais decisões
+## Decisões e justificativas
 
-- **`resposta_tratamento` removida:** é medida depois do tratamento ("estrutural incompleta" → 89 de 91 recorreram). Usá-la seria vazamento temporal. O script mostra que, com ela, a acurácia sobe para até 95% e ela vira a variável nº 1 nos três modelos.
-- **19 linhas idênticas mantidas:** todas são o perfil mais comum da base. Sem elas, a acurácia de validação cruzada muda menos de 1,2 ponto.
-- **Divisão 80/20 estratificada:** padronização e escolha de hiperparâmetros feitas só no treino. A divisão 70/30 dá o mesmo resultado.
-- **Naive Bayes misto:** Normal na idade e distribuição categórica (com suavização de Laplace) nas outras 14 variáveis, implementado no próprio script.
-- **Hiperparâmetros por validação cruzada de 5 partições** (F1 da classe "recorre"), com curvas de validação e de aprendizado para checar over e underfitting.
+| Etapa | Decisão | Justificativa |
+|---|---|---|
+| Dados | Remover `resposta_tratamento` | É medida depois do tratamento ("estrutural incompleta" → 89 de 91 recorreram). Na hora de prever, ela ainda não existe, então usá-la seria vazamento. Com ela, a acurácia sobe para até 95% e ela vira a variável nº 1 nos três modelos. |
+| Dados | Manter as 19 linhas idênticas | Todas são o perfil mais comum da base (mulher jovem, risco baixo, sem recorrência). Com poucos atributos, pacientes diferentes podem ter a mesma ficha. Sem elas, a acurácia de validação muda menos de 1,2 ponto. |
+| Dados | Não tratar valores ausentes | O dataset não tem nenhum. |
+| Pré-processamento | Codificar as categorias com uma ordem fixa | T, N, estádio e risco seguem a gravidade, o que deixa tabelas e gráficos mais fáceis de ler. |
+| Pré-processamento | One-hot nas categóricas (Árvore e KNN) | Evita que o modelo trate categorias como números com distância entre si. |
+| Pré-processamento | Padronizar a idade (Árvore e KNN) | O KNN mede distâncias, e sem padronizar a idade (dezenas) pesaria mais que as colunas binárias. A árvore não depende de escala, mas usa o mesmo pré-processamento para facilitar a comparação. |
+| Pré-processamento | Naive Bayes misto, implementado no projeto | O `GaussianNB` trataria categorias como números. O NB misto usa Normal na idade e distribuição categórica nas outras 14 variáveis, e suas probabilidades ficam fáceis de ler. |
+| Treinamento | Divisão 80/20 estratificada | Mantém 28% de recorrência no treino e no teste. Padronização e hiperparâmetros são ajustados só no treino, para não vazar informação do teste. A divisão 70/30, testada com 30 sementes, deu o mesmo resultado. |
+| Treinamento | Hiperparâmetros por validação cruzada de 5 partições, com critério F1 | O F1 da classe "recorre" equilibra encontrar recorrências e evitar alarmes falsos, e não é enganado pelo desbalanceamento. |
+| Treinamento | Árvore com profundidade 2 | Entre as configurações a até 1 desvio-padrão da melhor, escolhemos a mais simples. Árvores mais fundas sobem no treino e caem na validação (sem limite: F1 de 1,00 no treino e 0,71 na validação). |
+| Treinamento | KNN com k = 7 e pesos uniformes | É o ponto em que as curvas de treino e validação se encontram. Pesos por distância fariam o acerto no treino ser sempre 100%, o que impede de diagnosticar overfitting. |
+| Treinamento | Naive Bayes com alpha = 1 | Valores de 0,1 a 2 deram a mesma acurácia. A suavização de Laplace evita probabilidades quase zero nas categorias raras. |
+| Avaliação | Acurácia, precisão, recall, especificidade, F1 e ROC-AUC | Como 72% não recorrem, chutar sempre "não" já acerta 71%. O recall é a métrica mais importante, porque deixar passar uma recorrência é o pior erro. |
+| Avaliação | Comparar treino, validação e teste e repetir em 50 divisões | Diferenças pequenas indicam que não há overfitting. As 50 divisões mostram quanto o resultado depende da sorte da divisão. |
+| Interpretabilidade | Ferramentas próprias de cada modelo | Árvore: desenho, regras e importância de Gini (scikit-learn). Naive Bayes: probabilidades condicionais e decomposição da decisão. KNN: vizinhos mais próximos. |
+| Interpretabilidade | Permutação (scikit-learn), SHAP e LIME nos três modelos | Comparar os modelos na mesma régua. A permutação mostra de quais variáveis o desempenho depende, o SHAP divide o crédito entre variáveis correlacionadas e o LIME dá uma explicação local simples. |
+| Interpretabilidade | Não usar ELI5 | A permutação do próprio scikit-learn já cumpre o mesmo papel, e o ELI5 não é mantido para as versões atuais do scikit-learn. |
+
+**Bibliotecas usadas:** scikit-learn, pandas, NumPy, Matplotlib e Seaborn, além de SHAP, LIME e SciPy (distribuição Normal do Naive Bayes).
 
 ## Resultados no teste (77 pacientes, 22 com recorrência)
 
