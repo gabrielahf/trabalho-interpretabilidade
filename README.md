@@ -2,8 +2,8 @@
 
 Previsão de **recorrência do câncer diferenciado de tireoide** com **KNN**, **Naive Bayes** e **Árvore de Decisão**, e investigação de **por que** cada modelo chega às suas previsões: estrutura da árvore, probabilidades condicionais do Naive Bayes, vizinhos do KNN, importância por permutação, SHAP e LIME.
 
-**Autores:** Arthur Blasi, Gabriela Roxo e Luan Pacheco
-**Disciplina:** Interpretabilidade dos Modelos de Aprendizado de Máquina, Prof.ª Dr.ª Daniela Oliveira Ferreira do Amaral
+- **Autores:** Arthur Blasi, Gabriela Roxo e Luan Pacheco
+- **Disciplina:** Interpretabilidade dos Modelos de Aprendizado de Máquina, Prof.ª Dr.ª Daniela Oliveira Ferreira do Amaral
 
 ---
 
