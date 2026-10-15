@@ -84,11 +84,11 @@ O `main.py` chama uma função por etapa do enunciado:
 
 | Função em `main.py` | O que faz |
 |---|---|
-| `etapa_1_dados` | Carrega e traduz o dataset e gera os gráficos exploratórios. |
-| `etapa_2_treinamento` | Divide em 80/20, treina os três modelos com validação cruzada, gera as curvas de over/underfitting e avalia no teste. |
-| `etapa_3_interpretabilidade` | Árvore (regras e Gini), Naive Bayes (probabilidades condicionais), permutação e SHAP nos três modelos e explicação do caso exemplo (caminho na árvore, contribuições do NB, vizinhos do KNN, SHAP e LIME). |
-| `etapa_4_comparacao` | Rankings de importância dos três modelos e correlação entre eles. |
-| `etapa_5_robustez` | Experimento de vazamento, linhas idênticas, calibração, fumo × sexo, categorias raras, 50 divisões, subgrupos, estabilidade da árvore e 80/20 × 70/30. |
+| `dados` | Carrega e traduz o dataset e gera os gráficos exploratórios. |
+| `treinamento` | Divide em 80/20, treina os três modelos com validação cruzada, gera as curvas de over/underfitting e avalia no teste. |
+| `interpretabilidade` | Árvore (regras e Gini), Naive Bayes (probabilidades condicionais), permutação e SHAP nos três modelos e explicação do caso exemplo (caminho na árvore, contribuições do NB, vizinhos do KNN, SHAP e LIME). |
+| `comparacao` | Rankings de importância dos três modelos e correlação entre eles. |
+| `robustez` | Experimento de vazamento, linhas idênticas, calibração, fumo × sexo, categorias raras, 50 divisões, subgrupos, estabilidade da árvore e 80/20 × 70/30. |
 
 ### Arquivos em `figuras/`
 

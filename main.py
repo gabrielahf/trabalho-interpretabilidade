@@ -3,7 +3,9 @@ import warnings
 import numpy as np
 import pandas as pd
 
-from src import avaliacao, graficos, interpretabilidade, robustez
+from src import avaliacao, graficos
+from src import interpretabilidade as ferramentas_interpretabilidade
+from src import robustez as verificacoes_robustez
 from src.config import ARVORE, COLUNA_ALVO, KNN, NAIVE_BAYES, SEMENTE
 from src.dados import (ESQUEMA_PRINCIPAL, codificar_variaveis, carregar_dataset_original,
                        descrever_paciente, dividir_treino_teste, resumir_dataset, traduzir_dataset)
@@ -14,7 +16,7 @@ from src.saida import (criar_pastas_de_saida, imprimir_titulo, salvar_json, salv
 warnings.filterwarnings("ignore")
 
 
-def etapa_1_dados():
+def dados():
     """Carrega, traduz e descreve o dataset."""
     imprimir_titulo("Etapa 1: dados")
     dataset_original = carregar_dataset_original()
@@ -27,7 +29,7 @@ def etapa_1_dados():
     return dataset_original, dataset
 
 
-def etapa_2_treinamento(dataset):
+def treinamento(dataset):
     """Divide os dados, treina os três modelos e avalia o desempenho."""
     imprimir_titulo("Etapa 2: pré-processamento, treinamento e avaliação")
     X = codificar_variaveis(dataset)
@@ -59,15 +61,15 @@ def etapa_2_treinamento(dataset):
             "arvore_sem_limite": arvore_sem_limite, "referencia": referencia}
 
 
-def etapa_3_interpretabilidade(treino):
+def interpretabilidade(treino):
     """Explica cada modelo e o caso exemplo."""
     divisao, modelos = treino["divisao"], treino["modelos"]
 
     imprimir_titulo("Etapa 3a: árvore de decisão")
-    arvore_legivel = interpretabilidade.criar_arvore_legivel(
+    arvore_legivel = ferramentas_interpretabilidade.criar_arvore_legivel(
         modelos[ARVORE], treino["hiperparametros"][ARVORE], divisao)
-    regras = interpretabilidade.regras_da_arvore(arvore_legivel)
-    importancia_arvore = interpretabilidade.importancia_gini(arvore_legivel)
+    regras = ferramentas_interpretabilidade.regras_da_arvore(arvore_legivel)
+    importancia_arvore = ferramentas_interpretabilidade.importancia_gini(arvore_legivel)
     print(regras)
     salvar_texto(regras, "arvore_regras.txt")
     salvar_tabela(importancia_arvore, "arvore_importancia_gini.csv", header=["importancia"])
@@ -77,9 +79,9 @@ def etapa_3_interpretabilidade(treino):
     imprimir_titulo("Etapa 3b: naive bayes")
     naive_bayes = modelos[NAIVE_BAYES].named_steps["modelo"]
     print(f"Prioris: P(sem) = {naive_bayes.priori_[0]:.3f} | P(com) = {naive_bayes.priori_[1]:.3f}")
-    probabilidades_nb = interpretabilidade.probabilidades_condicionais(naive_bayes, divisao.X_treino)
-    distribuicao_idade = interpretabilidade.distribuicao_da_idade(naive_bayes)
-    importancia_nb = interpretabilidade.importancia_naive_bayes(naive_bayes, divisao.X_teste)
+    probabilidades_nb = ferramentas_interpretabilidade.probabilidades_condicionais(naive_bayes, divisao.X_treino)
+    distribuicao_idade = ferramentas_interpretabilidade.distribuicao_da_idade(naive_bayes)
+    importancia_nb = ferramentas_interpretabilidade.importancia_naive_bayes(naive_bayes, divisao.X_teste)
     print(probabilidades_nb.to_string())
     salvar_tabela(probabilidades_nb, "nb_prob_condicionais_categoricas.csv", index=False)
     salvar_tabela(distribuicao_idade, "nb_gaussiana_idade.csv")
@@ -89,40 +91,40 @@ def etapa_3_interpretabilidade(treino):
     graficos.distribuicao_idade_nb(naive_bayes, divisao.X_treino)
 
     imprimir_titulo("Etapa 3c: permutação e SHAP nos três modelos")
-    permutacao = interpretabilidade.importancia_por_permutacao(modelos, divisao)
-    salvar_tabela(interpretabilidade.tabela_permutacao(permutacao), "importancia_permutacao.csv")
+    permutacao = ferramentas_interpretabilidade.importancia_por_permutacao(modelos, divisao)
+    salvar_tabela(ferramentas_interpretabilidade.tabela_permutacao(permutacao), "importancia_permutacao.csv")
     graficos.importancia_permutacao(permutacao)
-    explicacoes_shap = interpretabilidade.calcular_shap(modelos, divisao)
-    shap_medio = interpretabilidade.importancia_shap(explicacoes_shap)
+    explicacoes_shap = ferramentas_interpretabilidade.calcular_shap(modelos, divisao)
+    shap_medio = ferramentas_interpretabilidade.importancia_shap(explicacoes_shap)
     salvar_tabela(shap_medio.round(4), "importancia_shap.csv")
     graficos.shap_global(explicacoes_shap)
 
     imprimir_titulo("Etapa 3d: caso exemplo")
-    probabilidades = interpretabilidade.probabilidades_no_teste(modelos, divisao)
-    posicao = interpretabilidade.escolher_caso_exemplo(probabilidades, divisao.y_teste)
+    probabilidades = ferramentas_interpretabilidade.probabilidades_no_teste(modelos, divisao)
+    posicao = ferramentas_interpretabilidade.escolher_caso_exemplo(probabilidades, divisao.y_teste)
     paciente = divisao.X_teste.iloc[[posicao]]
     descricao = descrever_paciente(divisao.X_teste, posicao)
     print(f"Paciente {posicao} do teste: {descricao}")
     print(probabilidades.iloc[posicao].to_string())
-    concordancia, discordancias = interpretabilidade.concordancia_entre_modelos(probabilidades)
+    concordancia, discordancias = ferramentas_interpretabilidade.concordancia_entre_modelos(probabilidades)
 
-    vizinhos = interpretabilidade.vizinhos_do_paciente(modelos[KNN], paciente, divisao)
+    vizinhos = ferramentas_interpretabilidade.vizinhos_do_paciente(modelos[KNN], paciente, divisao)
     salvar_tabela(vizinhos, "knn_vizinhos_caso.csv")
     print(f"Vizinhos com recorrência: {vizinhos['recorrencia'].sum()} de {len(vizinhos)}")
 
-    explicacoes_lime = interpretabilidade.explicar_com_lime(modelos, paciente, divisao.X_treino)
+    explicacoes_lime = ferramentas_interpretabilidade.explicar_com_lime(modelos, paciente, divisao.X_treino)
     salvar_json({nome: explicacao.as_list() for nome, explicacao in explicacoes_lime.items()}, "lime_caso.json")
     graficos.lime_do_knn(explicacoes_lime[KNN])
-    estabilidade_lime = interpretabilidade.estabilidade_do_lime(modelos[KNN], paciente, divisao.X_treino)
+    estabilidade_lime = ferramentas_interpretabilidade.estabilidade_do_lime(modelos[KNN], paciente, divisao.X_treino)
 
     graficos.shap_do_paciente(explicacoes_shap, posicao, descricao)
-    salvar_tabela(interpretabilidade.shap_do_paciente(explicacoes_shap, posicao), "shap_caso.csv")
+    salvar_tabela(ferramentas_interpretabilidade.shap_do_paciente(explicacoes_shap, posicao), "shap_caso.csv")
 
-    caminho = interpretabilidade.caminho_na_arvore(arvore_legivel, paciente)
+    caminho = ferramentas_interpretabilidade.caminho_na_arvore(arvore_legivel, paciente)
     salvar_texto("\n".join(caminho), "arvore_caminho_caso.txt")
     print("Caminho na árvore:", *caminho, sep="\n  ")
 
-    contribuicoes, log_chance_priori = interpretabilidade.contribuicoes_naive_bayes_paciente(naive_bayes, paciente)
+    contribuicoes, log_chance_priori = ferramentas_interpretabilidade.contribuicoes_naive_bayes_paciente(naive_bayes, paciente)
     graficos.contribuicoes_nb_do_paciente(contribuicoes, log_chance_priori, descricao)
     salvar_tabela(contribuicoes.round(3), "nb_contribuicoes_caso.csv", header=["log_razao"])
 
@@ -133,13 +135,13 @@ def etapa_3_interpretabilidade(treino):
             "estabilidade_lime": estabilidade_lime}
 
 
-def etapa_4_comparacao(explicacao):
+def comparacao(explicacao):
     """Compara as importâncias das variáveis entre os modelos e as ferramentas."""
     imprimir_titulo("Etapa 4: comparação")
-    rankings = interpretabilidade.montar_rankings(explicacao["importancia_arvore"], explicacao["importancia_nb"],
+    rankings = ferramentas_interpretabilidade.montar_rankings(explicacao["importancia_arvore"], explicacao["importancia_nb"],
                                                   explicacao["permutacao"], explicacao["shap_medio"])
     posicoes = rankings.rank(ascending=False, method="min").astype(int)
-    correlacao = interpretabilidade.correlacao_entre_rankings(rankings)
+    correlacao = ferramentas_interpretabilidade.correlacao_entre_rankings(rankings)
     salvar_tabela(posicoes, "ranking_variaveis.csv")
     salvar_tabela(correlacao.round(2), "spearman_rankings.csv")
     graficos.ranking_de_variaveis(posicoes)
@@ -148,25 +150,25 @@ def etapa_4_comparacao(explicacao):
     print("Concordância entre modelos:", explicacao["concordancia"])
 
 
-def etapa_5_robustez(dataset, treino, explicacao):
+def robustez(dataset, treino, explicacao):
     """Testa os pontos frágeis da análise."""
     X, y, divisao, modelos = treino["X"], treino["y"], treino["divisao"], treino["modelos"]
 
     imprimir_titulo("Experimento de vazamento (com resposta ao tratamento)")
-    vazamento = robustez.experimento_vazamento(dataset, y)
+    vazamento = verificacoes_robustez.experimento_vazamento(dataset, y)
     salvar_tabela(vazamento, "experimento_vazamento_resposta.csv")
     print(vazamento.to_string())
 
     imprimir_titulo("Sensibilidade às linhas idênticas")
-    sensibilidade = robustez.sensibilidade_linhas_identicas(modelos, dataset, X, y)
+    sensibilidade = verificacoes_robustez.sensibilidade_linhas_identicas(modelos, dataset, X, y)
     salvar_tabela(sensibilidade.round(3), "sensibilidade_linhas_identicas.csv")
     print(sensibilidade.round(3).to_string())
 
     imprimir_titulo("Etapa 5.1: calibração")
-    fora_da_amostra = robustez.probabilidades_fora_da_amostra(modelos, X, y)
-    calibracao = robustez.analisar_calibracao(fora_da_amostra, y)
+    fora_da_amostra = verificacoes_robustez.probabilidades_fora_da_amostra(modelos, X, y)
+    calibracao = verificacoes_robustez.analisar_calibracao(fora_da_amostra, y)
     salvar_tabela(calibracao, "robustez_1_calibracao.csv")
-    nb_calibrado_paciente = robustez.probabilidade_calibrada_do_paciente(
+    nb_calibrado_paciente = verificacoes_robustez.probabilidade_calibrada_do_paciente(
         modelos[NAIVE_BAYES], divisao, explicacao["paciente"])
     print(calibracao.to_string())
     print(f"Caso exemplo: NB {explicacao['probabilidades'].loc[explicacao['posicao'], NAIVE_BAYES]:.5f}"
@@ -174,8 +176,8 @@ def etapa_5_robustez(dataset, treino, explicacao):
     graficos.curva_de_calibracao(fora_da_amostra, y, calibracao)
 
     imprimir_titulo("Etapa 5.2: fumo e sexo")
-    fumo_sexo = robustez.recorrencia_por_sexo_e_fumo(dataset)
-    sem_fumo = robustez.modelos_sem_fumo(modelos, treino["hiperparametros"], dataset, X, y)
+    fumo_sexo = verificacoes_robustez.recorrencia_por_sexo_e_fumo(dataset)
+    sem_fumo = verificacoes_robustez.modelos_sem_fumo(modelos, treino["hiperparametros"], dataset, X, y)
     salvar_tabela(fumo_sexo, "robustez_2_fumo_por_sexo.csv", index=False)
     salvar_tabela(sem_fumo, "robustez_2_modelos_sem_fumo.csv")
     print(fumo_sexo.to_string(index=False))
@@ -184,10 +186,10 @@ def etapa_5_robustez(dataset, treino, explicacao):
 
     imprimir_titulo("Etapa 5.3: categorias raras")
     gerador = np.random.RandomState(SEMENTE)
-    razoes = robustez.razoes_por_suavizacao(explicacao["naive_bayes"], divisao)
+    razoes = verificacoes_robustez.razoes_por_suavizacao(explicacao["naive_bayes"], divisao)
     salvar_tabela(razoes.round(2), "robustez_3_razoes_vs_alpha.csv")
-    acuracia_alpha = robustez.acuracia_por_suavizacao(modelos[NAIVE_BAYES], X, y)
-    intervalos = robustez.intervalo_confianca_razoes(explicacao["naive_bayes"], divisao, gerador,
+    acuracia_alpha = verificacoes_robustez.acuracia_por_suavizacao(modelos[NAIVE_BAYES], X, y)
+    intervalos = verificacoes_robustez.intervalo_confianca_razoes(explicacao["naive_bayes"], divisao, gerador,
                                                      razoes["alpha=1.0"])
     salvar_tabela(intervalos.round(2), "robustez_3_ic_bootstrap.csv")
     print(razoes.round(2).to_string())
@@ -195,20 +197,20 @@ def etapa_5_robustez(dataset, treino, explicacao):
     graficos.intervalo_das_razoes(intervalos, razoes["n_treino"])
 
     imprimir_titulo("Etapa 5.4: generalização")
-    variacao = robustez.variacao_entre_divisoes(modelos, X, y)
-    resumo_variacao = robustez.resumir_variacao(variacao)
+    variacao = verificacoes_robustez.variacao_entre_divisoes(modelos, X, y)
+    resumo_variacao = verificacoes_robustez.resumir_variacao(variacao)
     salvar_tabela(resumo_variacao.round(3), "robustez_4_50_divisoes.csv")
     print(resumo_variacao.round(3).to_string())
     graficos.variacao_entre_divisoes(variacao, treino["metricas"])
-    subgrupos = robustez.desempenho_por_subgrupo(fora_da_amostra, dataset, y, list(modelos))
+    subgrupos = verificacoes_robustez.desempenho_por_subgrupo(fora_da_amostra, dataset, y, list(modelos))
     salvar_tabela(pd.DataFrame(subgrupos).round(3), "robustez_4_subgrupos.csv", index=False)
-    estabilidade_arvore = robustez.estabilidade_da_arvore(explicacao["arvore_legivel"], treino["hiperparametros"],
+    estabilidade_arvore = verificacoes_robustez.estabilidade_da_arvore(explicacao["arvore_legivel"], treino["hiperparametros"],
                                                           divisao, gerador)
     print("Estabilidade da árvore:", estabilidade_arvore)
 
     imprimir_titulo("Etapa 5.5: divisão 80/20 x 70/30")
-    divisoes = robustez.comparar_proporcoes_de_divisao(X, y)
-    resumo_divisoes = robustez.resumir_proporcoes_de_divisao(divisoes)
+    divisoes = verificacoes_robustez.comparar_proporcoes_de_divisao(X, y)
+    resumo_divisoes = verificacoes_robustez.resumir_proporcoes_de_divisao(divisoes)
     salvar_tabela(divisoes, "robustez_5_divisao_80_20_vs_70_30.csv", index=False)
     print(resumo_divisoes.to_string())
 
@@ -216,7 +218,7 @@ def etapa_5_robustez(dataset, treino, explicacao):
         "calibracao": calibracao.to_dict(orient="index"),
         "caso_nb_calibrado": nb_calibrado_paciente,
         "fumo_por_sexo": fumo_sexo.to_dict(orient="records"),
-        "pct_fumantes_homens": robustez.proporcao_de_homens_entre_fumantes(dataset),
+        "pct_fumantes_homens": verificacoes_robustez.proporcao_de_homens_entre_fumantes(dataset),
         "modelos_sem_fumo": sem_fumo.to_dict(orient="index"),
         "razoes_vs_alpha": razoes.round(2).to_dict(orient="index"),
         "acc_cv_por_alpha": acuracia_alpha,
@@ -259,11 +261,11 @@ def salvar_resumo(dataset_original, dataset, treino, explicacao, verificacoes):
 def main():
     np.random.seed(SEMENTE)
     criar_pastas_de_saida()
-    dataset_original, dataset = etapa_1_dados()
-    treino = etapa_2_treinamento(dataset)
-    explicacao = etapa_3_interpretabilidade(treino)
-    etapa_4_comparacao(explicacao)
-    verificacoes = etapa_5_robustez(dataset, treino, explicacao)
+    dataset_original, dataset = dados()
+    treino = treinamento(dataset)
+    explicacao = interpretabilidade(treino)
+    comparacao(explicacao)
+    verificacoes = robustez(dataset, treino, explicacao)
     salvar_resumo(dataset_original, dataset, treino, explicacao, verificacoes)
     print("\nFim. Figuras em figuras/ e tabelas em resultados/.")
 
