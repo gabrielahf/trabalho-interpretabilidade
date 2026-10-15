@@ -1,5 +1,3 @@
-"""Testes do NaiveBayesMisto. Uso: python -m unittest discover tests"""
-
 import unittest
 
 import numpy as np

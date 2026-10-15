@@ -1,11 +1,3 @@
-"""Trabalho I - Interpretabilidade dos Modelos de Aprendizado de Máquina.
-
-Previsão de recorrência do câncer diferenciado de tireoide com Árvore de Decisão,
-Naive Bayes e KNN, e análise de por que cada modelo chega às suas previsões.
-
-Uso: python main.py
-"""
-
 import warnings
 
 import numpy as np

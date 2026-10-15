@@ -1,5 +1,3 @@
-"""Configurações do projeto: caminhos, colunas do dataset, hiperparâmetros e cores."""
-
 from pathlib import Path
 
 SEMENTE = 42

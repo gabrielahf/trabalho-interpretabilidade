@@ -1,5 +1,3 @@
-"""Avaliação dos modelos: métricas no teste, comparação treino x validação x teste e curvas de over/underfitting."""
-
 import numpy as np
 import pandas as pd
 from sklearn.base import clone

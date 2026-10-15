@@ -1,5 +1,3 @@
-"""Gráficos do trabalho. Cada função recebe os resultados já calculados e salva uma figura em figuras/."""
-
 import matplotlib
 
 matplotlib.use("Agg")

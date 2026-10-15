@@ -1,5 +1,3 @@
-"""Carregamento, tradução e codificação do dataset, e divisão em treino e teste."""
-
 import io
 import urllib.request
 import zipfile

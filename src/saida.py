@@ -1,5 +1,3 @@
-"""Funções para salvar figuras, tabelas e arquivos JSON, e para imprimir títulos no terminal."""
-
 import json
 
 import matplotlib.pyplot as plt

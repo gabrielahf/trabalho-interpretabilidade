@@ -1,5 +1,3 @@
-"""Criação dos modelos (Árvore, Naive Bayes misto e KNN) e escolha dos hiperparâmetros."""
-
 import numpy as np
 import pandas as pd
 from scipy.stats import norm
@@ -18,11 +16,7 @@ from src.dados import EsquemaVariaveis
 
 
 class NaiveBayesMisto(ClassifierMixin, BaseEstimator):
-    """Naive Bayes com distribuição Normal nas variáveis numéricas e categórica nas demais.
-
-    P(classe | x) é proporcional a P(classe) * produto de P(x_j | classe).
-    Em escala log, a decisão é uma soma, então a contribuição de cada variável pode ser lida diretamente.
-    """
+    """Naive Bayes com distribuição Normal nas variáveis numéricas e categórica nas demais."""
 
     def __init__(self, alpha=1.0, indices_numericas=None, indices_categoricas=None, quantidade_categorias=None):
         self.alpha = alpha

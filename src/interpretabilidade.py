@@ -1,5 +1,3 @@
-"""Interpretabilidade: estrutura da árvore, probabilidades do Naive Bayes, permutação, SHAP, LIME e o caso exemplo."""
-
 from dataclasses import dataclass
 
 import numpy as np
