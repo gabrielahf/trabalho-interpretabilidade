@@ -254,7 +254,7 @@ def variacao_entre_divisoes(resultados: dict, metricas_teste: pd.DataFrame) -> N
     nomes = list(resultados)
     _, eixos = plt.subplots(1, 3, figsize=(14, 4))
     for eixo, metrica in zip(eixos, ["acuracia", "recall", "auc"]):
-        eixo.boxplot([resultados[nome][metrica] for nome in nomes], labels=["Árvore", "NB", "KNN"],
+        eixo.boxplot([resultados[nome][metrica] for nome in nomes], tick_labels=["Árvore", "NB", "KNN"],
                      patch_artist=True, boxprops=dict(facecolor="#eef3f4"))
         for posicao, nome in enumerate(nomes):
             eixo.scatter(posicao + 1, metricas_teste.loc[nome, coluna_no_teste[metrica]], c=COR_DESTAQUE,
