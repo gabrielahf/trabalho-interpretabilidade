@@ -1,0 +1,4 @@
+modelo,acuracia,f1,roc_auc,variavel_mais_importante,queda_auc_top1
+Árvore de Decisão,0.948,0.905,0.97,resposta_tratamento,0.309
+Naive Bayes,0.922,0.864,0.988,resposta_tratamento,0.042
+KNN,0.948,0.905,0.991,resposta_tratamento,0.065

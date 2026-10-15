@@ -1,0 +1,10 @@
+,,mean,2.5%,97.5%
+Árvore de Decisão,acuracia,0.869,0.795,0.934
+Árvore de Decisão,recall,0.882,0.735,1.0
+Árvore de Decisão,auc,0.9,0.825,0.953
+Naive Bayes,acuracia,0.864,0.79,0.944
+Naive Bayes,recall,0.791,0.601,0.952
+Naive Bayes,auc,0.941,0.882,0.985
+KNN,acuracia,0.881,0.808,0.942
+KNN,recall,0.715,0.5,0.908
+KNN,auc,0.912,0.817,0.977

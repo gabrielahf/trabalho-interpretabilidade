@@ -1,0 +1,5 @@
+modelo,brier,acuracia_oof,auc_oof,pct_prob_extrema,acerto_nas_extremas
+Árvore de Decisão,0.092,0.869,0.893,0.084,1.0
+Naive Bayes,0.106,0.862,0.94,0.768,0.959
+KNN,0.089,0.88,0.916,0.632,0.959
+Naive Bayes calibrado,0.096,0.864,0.904,0.0,

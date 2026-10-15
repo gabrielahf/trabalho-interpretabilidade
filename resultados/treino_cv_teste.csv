@@ -1,0 +1,4 @@
+modelo,acc_treino,acc_cv,acc_cv_dp,acc_teste,f1_treino,f1_cv,f1_teste,auc_treino,auc_cv,auc_teste
+Árvore de Decisão,0.866,0.866,0.029,0.883,0.785,0.784,0.824,0.903,0.892,0.945
+Naive Bayes,0.873,0.863,0.027,0.883,0.782,0.764,0.809,0.94,0.934,0.969
+KNN,0.905,0.899,0.037,0.909,0.818,0.803,0.837,0.96,0.909,0.97

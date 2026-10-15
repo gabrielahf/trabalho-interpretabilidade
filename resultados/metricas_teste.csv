@@ -1,0 +1,4 @@
+modelo,acuracia,acuracia_balanceada,precisao,recall,especificidade,f1,roc_auc
+Árvore de Decisão,0.883,0.905,0.724,0.955,0.855,0.824,0.945
+Naive Bayes,0.883,0.877,0.76,0.864,0.891,0.809,0.969
+KNN,0.909,0.882,0.857,0.818,0.945,0.837,0.97

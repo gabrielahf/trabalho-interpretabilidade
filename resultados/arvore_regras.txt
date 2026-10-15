@@ -1,0 +1,10 @@
+|--- risco=baixo <= 0.5
+|   |--- risco=alto <= 0.5
+|   |   |--- weights: [30.0, 50.0] class: 1
+|   |--- risco=alto >  0.5
+|   |   |--- weights: [0.0, 25.0] class: 1
+|--- risco=baixo >  0.5
+|   |--- sexo=feminino <= 0.5
+|   |   |--- weights: [16.0, 4.0] class: 0
+|   |--- sexo=feminino >  0.5
+|   |   |--- weights: [174.0, 7.0] class: 0

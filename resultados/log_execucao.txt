@@ -1,0 +1,205 @@
+Instâncias: 383 | colunas: 16 features + alvo
+Valores ausentes: 0
+Linhas duplicadas: 19
+Recorrência: 28.2%
+Treino: 306 | Teste: 77
+Árvore de Decisão: {'criterion': 'entropy', 'max_depth': 2, 'min_samples_leaf': 3} | F1 CV = 0.784
+Naive Bayes: {'alpha': 1.0} | F1 CV = 0.764
+KNN: {'metric': 'euclidean', 'n_neighbors': 7, 'weights': 'uniform'} | F1 CV = 0.803
+Árvore (regra 1-DP): {'criterion': 'entropy', 'max_depth': 2, 'min_samples_leaf': 20}
+
+Métricas no teste:
+                    acuracia  acuracia_balanceada  precisao  recall  especificidade     f1  roc_auc
+modelo                                                                                            
+Árvore de Decisão     0.883                0.905     0.724   0.955           0.855  0.824    0.945
+Naive Bayes           0.883                0.877     0.760   0.864           0.891  0.809    0.969
+KNN                   0.909                0.882     0.857   0.818           0.945  0.837    0.970
+
+Treino x CV x Teste:
+                    acc_treino  acc_cv  acc_cv_dp  acc_teste  f1_treino  f1_cv  f1_teste  auc_treino  auc_cv  auc_teste
+modelo                                                                                                                
+Árvore de Decisão       0.866   0.866      0.029      0.883      0.785  0.784     0.824       0.903   0.892      0.945
+Naive Bayes             0.873   0.863      0.027      0.883      0.782  0.764     0.809       0.940   0.934      0.969
+KNN                     0.905   0.899      0.037      0.909      0.818  0.803     0.837       0.960   0.909      0.970
+Baseline (classe majoritária): acurácia 0.714
+
+Regras da árvore:
+ |--- risco=baixo <= 0.5
+|   |--- risco=alto <= 0.5
+|   |   |--- weights: [30.0, 50.0] class: 1
+|   |--- risco=alto >  0.5
+|   |   |--- weights: [0.0, 25.0] class: 1
+|--- risco=baixo >  0.5
+|   |--- sexo=feminino <= 0.5
+|   |   |--- weights: [16.0, 4.0] class: 0
+|   |--- sexo=feminino >  0.5
+|   |   |--- weights: [174.0, 7.0] class: 0
+
+
+Prioris: P(sem)=0.719  P(com)=0.281
+             variavel           categoria  n_treino  P(x|sem recorrência)  P(x|com recorrência)  razao_verossimilhanca
+0                sexo            feminino       252                 0.901                 0.614                  0.681
+1                sexo           masculino        54                 0.099                 0.386                  3.899
+2             fumante                 não       267                 0.937                 0.693                  0.740
+3             fumante                 sim        39                 0.063                 0.307                  4.865
+4           hist_fumo                 não       286                 0.946                 0.886                  0.937
+5           hist_fumo                 sim        20                 0.054                 0.114                  2.102
+6   hist_radioterapia                 não       301                 0.991                 0.943                  0.952
+7   hist_radioterapia                 sim         5                 0.009                 0.057                  6.307
+8     funcao_tireoide              normal       266                 0.844                 0.857                  1.015
+9     funcao_tireoide       hiper clínico        15                 0.062                 0.033                  0.530
+10    funcao_tireoide    hiper subclínico         2                 0.013                 0.011                  0.824
+11    funcao_tireoide        hipo clínico        11                 0.044                 0.033                  0.742
+12    funcao_tireoide     hipo subclínico        12                 0.036                 0.066                  1.854
+13       exame_fisico              normal         7                 0.027                 0.033                  1.236
+14       exame_fisico   nódulo único esq.        65                 0.213                 0.209                  0.979
+15       exame_fisico   nódulo único dir.       109                 0.391                 0.253                  0.646
+16       exame_fisico        multinodular       120                 0.342                 0.495                  1.445
+17       exame_fisico        bócio difuso         5                 0.027                 0.011                  0.412
+18         adenopatia                 não       222                 0.876                 0.283                  0.323
+19         adenopatia             direita        37                 0.071                 0.250                  3.531
+20         adenopatia            esquerda        13                 0.022                 0.109                  4.913
+21         adenopatia           bilateral        26                 0.022                 0.250                 11.300
+22         adenopatia           posterior         2                 0.004                 0.033                  7.370
+23         adenopatia             extensa         6                 0.004                 0.076                 17.196
+24          patologia     micropapilífero        42                 0.192                 0.011                  0.058
+25          patologia          papilífero       229                 0.705                 0.811                  1.150
+26          patologia           folicular        22                 0.058                 0.122                  2.106
+27          patologia  células de Hürthle        13                 0.045                 0.056                  1.244
+28         focalidade            unifocal       193                 0.739                 0.352                  0.477
+29         focalidade          multifocal       113                 0.261                 0.648                  2.479
+30              risco               baixo       201                 0.857                 0.135                  0.157
+31              risco       intermediário        80                 0.139                 0.573                  4.122
+32              risco                alto        25                 0.004                 0.292                 65.146
+33                  T                 T1a        43                 0.189                 0.022                  0.114
+34                  T                 T1b        33                 0.128                 0.065                  0.505
+35                  T                  T2       122                 0.471                 0.183                  0.388
+36                  T                 T3a        75                 0.189                 0.366                  1.930
+37                  T                 T3b        14                 0.013                 0.140                 10.577
+38                  T                 T4a        13                 0.004                 0.151                 34.172
+39                  T                 T4b         6                 0.004                 0.075                 17.086
+40                  N                  N0       216                 0.865                 0.281                  0.325
+41                  N                 N1a        16                 0.049                 0.079                  1.594
+42                  N                 N1b        74                 0.085                 0.640                  7.517
+43                  M                  M0       294                 0.995                 0.852                  0.856
+44                  M                  M1        12                 0.005                 0.148                 32.795
+45            estadio                   I       266                 0.956                 0.582                  0.610
+46            estadio                  II        27                 0.031                 0.242                  7.771
+47            estadio                 III         3                 0.004                 0.044                  9.890
+48            estadio                 IVA         3                 0.004                 0.044                  9.890
+49            estadio                 IVB         7                 0.004                 0.088                 19.780
+       media_sem  dp_sem  media_com  dp_com
+idade      38.63   12.91      46.35   18.16
+SHAP Árvore de Decisão ok
+SHAP Naive Bayes ok
+SHAP KNN ok
+
+Caso exemplo (índice no teste): 23 {'idade': 80, 'sexo': 'masculino', 'fumante': 'sim', 'hist_fumo': 'não', 'hist_radioterapia': 'não', 'funcao_tireoide': 'normal', 'exame_fisico': 'nódulo único esq.', 'adenopatia': 'não', 'patologia': 'células de Hürthle', 'focalidade': 'multifocal', 'risco': 'intermediário', 'T': 'T4a', 'N': 'N0', 'M': 'M0', 'estadio': 'II'}
+Árvore de Decisão    0.625000
+Naive Bayes          0.999977
+KNN                  0.571429
+Name: 23, dtype: float64
+Vizinhos do caso: 4 de 7 com recorrência
+Caminho na árvore:
+  risco=baixo = 0.0 <= 0.5
+  risco=alto = 0.0 <= 0.5
+  FOLHA: [0.375, 0.625] (proporção sem/com)
+
+Com 'resposta_tratamento' (vazamento):
+                    acuracia     f1  roc_auc variavel_mais_importante  queda_auc_top1
+modelo                                                                              
+Árvore de Decisão     0.948  0.905    0.970      resposta_tratamento           0.309
+Naive Bayes           0.922  0.864    0.988      resposta_tratamento           0.042
+KNN                   0.948  0.905    0.991      resposta_tratamento           0.065
+
+Sensibilidade (validação cruzada 5x5 na base inteira):
+                    acc_cv_com_identicas  acc_cv_sem_identicas
+Árvore de Decisão                 0.869                 0.863
+Naive Bayes                       0.864                 0.856
+KNN                               0.882                 0.870
+
+[5.1] Calibração (probabilidades fora da amostra):
+                        brier  acuracia_oof  auc_oof  pct_prob_extrema  acerto_nas_extremas
+modelo                                                                                    
+Árvore de Decisão      0.092         0.869    0.893             0.084                1.000
+Naive Bayes            0.106         0.862    0.940             0.768                0.959
+KNN                    0.089         0.880    0.916             0.632                0.959
+Naive Bayes calibrado  0.096         0.864    0.904             0.000                  NaN
+Caso exemplo: NB 0.99998 -> NB calibrado 0.783
+
+[5.2] Recorrência por sexo e fumo:
+      sexo fumante  taxa   n
+ feminino     não 0.198 303
+ feminino     sim 0.667   9
+masculino     não 0.484  31
+masculino     sim 0.675  40
+Modelos sem a variável fumante (CV 5x5):
+                    acc_com_fumo  acc_sem_fumo  auc_com_fumo  auc_sem_fumo
+modelo                                                                   
+Árvore de Decisão         0.869         0.869         0.898         0.900
+Naive Bayes               0.864         0.872         0.941         0.941
+KNN                       0.882         0.881         0.913         0.907
+
+[5.3] Razão de verossimilhança conforme a suavização:
+                            n_treino  n_com_recorrencia  alpha=0.1  alpha=0.5  alpha=1.0  alpha=2.0
+risco=alto                       25                 25     640.73     129.10      65.15      33.16
+M=M1                             12                 12     309.10      63.51      32.80      17.42
+T=T4a                            13                 13     333.47      67.42      34.17      17.55
+estadio=IVB                       7                  7     180.99      37.71      19.78      10.78
+adenopatia=extensa                6                  6     155.39      32.57      17.20       9.47
+adenopatia=bilateral             26                 22      13.73      12.53      11.30       9.47
+N=N1b                            74                 56       7.91       7.73       7.52       7.12
+fumante=sim                      39                 26       5.09       4.99       4.87       4.65
+sexo=masculino                   54                 33       4.01       3.96       3.90       3.79
+risco=baixo                     201                 11       0.15       0.15       0.16       0.17
+patologia=micropapilífero        42                  0       0.01       0.03       0.06       0.11
+Acurácia CV 5x5 por alpha: {0.1: 0.865, 0.5: 0.865, 1.0: 0.864, 2.0: 0.868}
+IC 95% bootstrap (alpha = 1):
+                            razao  ic_2.5  ic_97.5
+risco=alto                 65.15   43.83    88.13
+M=M1                       32.80   18.23    51.27
+T=T4a                      34.17   19.83    50.89
+estadio=IVB                19.78    8.63    31.81
+adenopatia=extensa         17.20    6.88    30.52
+adenopatia=bilateral       11.30    5.27    32.11
+N=N1b                       7.52    4.91    12.73
+fumante=sim                 4.87    2.72     9.33
+sexo=masculino              3.90    2.55     6.31
+risco=baixo                 0.16    0.08     0.24
+patologia=micropapilífero   0.06    0.04     0.08
+
+[5.4] 50 divisões treino/teste (média e faixa de 95%):
+                              mean   2.5%  97.5%
+Árvore de Decisão acuracia  0.869  0.795  0.934
+                  recall    0.882  0.735  1.000
+                  auc       0.900  0.825  0.953
+Naive Bayes       acuracia  0.864  0.790  0.944
+                  recall    0.791  0.601  0.952
+                  auc       0.941  0.882  0.985
+KNN               acuracia  0.881  0.808  0.942
+                  recall    0.715  0.500  0.908
+                  auc       0.912  0.817  0.977
+Desempenho por subgrupo (fora da amostra):
+                                  acuracia                               recall                              
+modelo                                KNN Naive Bayes Árvore de Decisão    KNN Naive Bayes Árvore de Decisão
+grupo       n   prop_recorrencia                                                                            
+homens      71  0.592               0.859       0.817             0.831  0.833       0.857             0.881
+idade < 55  305 0.213               0.892       0.869             0.875  0.692       0.738             0.892
+idade >= 55 78  0.551               0.833       0.833             0.846  0.744       0.860             0.884
+mulheres    312 0.212               0.885       0.872             0.878  0.636       0.742             0.894
+Estabilidade da árvore (200 bootstraps): {'raiz': {'risco': 0.98, 'adenopatia': 0.015, 'N': 0.005}, 'variaveis_usadas': {'idade + risco': 0.27, 'risco + sexo': 0.12, 'patologia + risco': 0.08, 'T + risco': 0.075, 'fumante + idade + risco': 0.055}}
+
+[5.5] 80/20 x 70/30 (30 sementes cada):
+                              acc  acc_dp  recall     f1    auc
+modelo            divisao                                     
+KNN               70/30    0.878   0.031   0.709  0.763  0.907
+                  80/20    0.873   0.041   0.705  0.757  0.914
+Naive Bayes       70/30    0.866   0.028   0.801  0.769  0.942
+                  80/20    0.871   0.038   0.826  0.786  0.945
+Árvore de Decisão 70/30    0.865   0.033   0.808  0.768  0.897
+                  80/20    0.867   0.035   0.839  0.783  0.901
+
+Concordância: {'Árvore de Decisão x Naive Bayes': 0.922077922077922, 'Árvore de Decisão x KNN': 0.8701298701298701, 'Naive Bayes x KNN': 0.948051948051948, 'os três': 0.8701298701298701}
+Estabilidade LIME (top-3 igual): 0.8
+
+Fim. Figuras em ./figuras, tabelas em ./resultados

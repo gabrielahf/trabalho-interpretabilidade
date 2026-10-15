@@ -1,0 +1,438 @@
+{
+  "calibracao": {
+    "Árvore de Decisão": {
+      "brier": 0.092,
+      "acuracia_oof": 0.869,
+      "auc_oof": 0.893,
+      "pct_prob_extrema": 0.084,
+      "acerto_nas_extremas": 1.0
+    },
+    "Naive Bayes": {
+      "brier": 0.106,
+      "acuracia_oof": 0.862,
+      "auc_oof": 0.94,
+      "pct_prob_extrema": 0.768,
+      "acerto_nas_extremas": 0.959
+    },
+    "KNN": {
+      "brier": 0.089,
+      "acuracia_oof": 0.88,
+      "auc_oof": 0.916,
+      "pct_prob_extrema": 0.632,
+      "acerto_nas_extremas": 0.959
+    },
+    "Naive Bayes calibrado": {
+      "brier": 0.096,
+      "acuracia_oof": 0.864,
+      "auc_oof": 0.904,
+      "pct_prob_extrema": 0.0,
+      "acerto_nas_extremas": NaN
+    }
+  },
+  "caso_nb_calibrado": 0.7828064397878065,
+  "fumo_por_sexo": [
+    {
+      "sexo": "feminino",
+      "fumante": "não",
+      "taxa": 0.198,
+      "n": 303
+    },
+    {
+      "sexo": "feminino",
+      "fumante": "sim",
+      "taxa": 0.667,
+      "n": 9
+    },
+    {
+      "sexo": "masculino",
+      "fumante": "não",
+      "taxa": 0.484,
+      "n": 31
+    },
+    {
+      "sexo": "masculino",
+      "fumante": "sim",
+      "taxa": 0.675,
+      "n": 40
+    }
+  ],
+  "pct_fumantes_homens": 0.8163265306122449,
+  "modelos_sem_fumo": {
+    "Árvore de Decisão": {
+      "acc_com_fumo": 0.869,
+      "acc_sem_fumo": 0.869,
+      "auc_com_fumo": 0.898,
+      "auc_sem_fumo": 0.9
+    },
+    "Naive Bayes": {
+      "acc_com_fumo": 0.864,
+      "acc_sem_fumo": 0.872,
+      "auc_com_fumo": 0.941,
+      "auc_sem_fumo": 0.941
+    },
+    "KNN": {
+      "acc_com_fumo": 0.882,
+      "acc_sem_fumo": 0.881,
+      "auc_com_fumo": 0.913,
+      "auc_sem_fumo": 0.907
+    }
+  },
+  "razoes_vs_alpha": {
+    "risco=alto": {
+      "n_treino": 25,
+      "n_com_recorrencia": 25,
+      "alpha=0.1": 640.73,
+      "alpha=0.5": 129.1,
+      "alpha=1.0": 65.15,
+      "alpha=2.0": 33.16
+    },
+    "M=M1": {
+      "n_treino": 12,
+      "n_com_recorrencia": 12,
+      "alpha=0.1": 309.1,
+      "alpha=0.5": 63.51,
+      "alpha=1.0": 32.8,
+      "alpha=2.0": 17.42
+    },
+    "T=T4a": {
+      "n_treino": 13,
+      "n_com_recorrencia": 13,
+      "alpha=0.1": 333.47,
+      "alpha=0.5": 67.42,
+      "alpha=1.0": 34.17,
+      "alpha=2.0": 17.55
+    },
+    "estadio=IVB": {
+      "n_treino": 7,
+      "n_com_recorrencia": 7,
+      "alpha=0.1": 180.99,
+      "alpha=0.5": 37.71,
+      "alpha=1.0": 19.78,
+      "alpha=2.0": 10.78
+    },
+    "adenopatia=extensa": {
+      "n_treino": 6,
+      "n_com_recorrencia": 6,
+      "alpha=0.1": 155.39,
+      "alpha=0.5": 32.57,
+      "alpha=1.0": 17.2,
+      "alpha=2.0": 9.47
+    },
+    "adenopatia=bilateral": {
+      "n_treino": 26,
+      "n_com_recorrencia": 22,
+      "alpha=0.1": 13.73,
+      "alpha=0.5": 12.53,
+      "alpha=1.0": 11.3,
+      "alpha=2.0": 9.47
+    },
+    "N=N1b": {
+      "n_treino": 74,
+      "n_com_recorrencia": 56,
+      "alpha=0.1": 7.91,
+      "alpha=0.5": 7.73,
+      "alpha=1.0": 7.52,
+      "alpha=2.0": 7.12
+    },
+    "fumante=sim": {
+      "n_treino": 39,
+      "n_com_recorrencia": 26,
+      "alpha=0.1": 5.09,
+      "alpha=0.5": 4.99,
+      "alpha=1.0": 4.87,
+      "alpha=2.0": 4.65
+    },
+    "sexo=masculino": {
+      "n_treino": 54,
+      "n_com_recorrencia": 33,
+      "alpha=0.1": 4.01,
+      "alpha=0.5": 3.96,
+      "alpha=1.0": 3.9,
+      "alpha=2.0": 3.79
+    },
+    "risco=baixo": {
+      "n_treino": 201,
+      "n_com_recorrencia": 11,
+      "alpha=0.1": 0.15,
+      "alpha=0.5": 0.15,
+      "alpha=1.0": 0.16,
+      "alpha=2.0": 0.17
+    },
+    "patologia=micropapilífero": {
+      "n_treino": 42,
+      "n_com_recorrencia": 0,
+      "alpha=0.1": 0.01,
+      "alpha=0.5": 0.03,
+      "alpha=1.0": 0.06,
+      "alpha=2.0": 0.11
+    }
+  },
+  "acc_cv_por_alpha": {
+    "0.1": 0.8652699931647301,
+    "0.5": 0.8647505126452495,
+    "1.0": 0.8637047163362952,
+    "2.0": 0.8678673957621327
+  },
+  "ic_razoes": {
+    "risco=alto": {
+      "razao": 65.15,
+      "ic_2.5": 43.83,
+      "ic_97.5": 88.13
+    },
+    "M=M1": {
+      "razao": 32.8,
+      "ic_2.5": 18.23,
+      "ic_97.5": 51.27
+    },
+    "T=T4a": {
+      "razao": 34.17,
+      "ic_2.5": 19.83,
+      "ic_97.5": 50.89
+    },
+    "estadio=IVB": {
+      "razao": 19.78,
+      "ic_2.5": 8.63,
+      "ic_97.5": 31.81
+    },
+    "adenopatia=extensa": {
+      "razao": 17.2,
+      "ic_2.5": 6.88,
+      "ic_97.5": 30.52
+    },
+    "adenopatia=bilateral": {
+      "razao": 11.3,
+      "ic_2.5": 5.27,
+      "ic_97.5": 32.11
+    },
+    "N=N1b": {
+      "razao": 7.52,
+      "ic_2.5": 4.91,
+      "ic_97.5": 12.73
+    },
+    "fumante=sim": {
+      "razao": 4.87,
+      "ic_2.5": 2.72,
+      "ic_97.5": 9.33
+    },
+    "sexo=masculino": {
+      "razao": 3.9,
+      "ic_2.5": 2.55,
+      "ic_97.5": 6.31
+    },
+    "risco=baixo": {
+      "razao": 0.16,
+      "ic_2.5": 0.08,
+      "ic_97.5": 0.24
+    },
+    "patologia=micropapilífero": {
+      "razao": 0.06,
+      "ic_2.5": 0.04,
+      "ic_97.5": 0.08
+    }
+  },
+  "variacao_50_divisoes": {
+    "Árvore de Decisão|acuracia": 0.869,
+    "Árvore de Decisão|recall": 0.882,
+    "Árvore de Decisão|auc": 0.9,
+    "Naive Bayes|acuracia": 0.864,
+    "Naive Bayes|recall": 0.791,
+    "Naive Bayes|auc": 0.941,
+    "KNN|acuracia": 0.881,
+    "KNN|recall": 0.715,
+    "KNN|auc": 0.912
+  },
+  "variacao_50_divisoes_faixa": {
+    "Árvore de Decisão|acuracia": [
+      0.795,
+      0.934
+    ],
+    "Árvore de Decisão|recall": [
+      0.735,
+      1.0
+    ],
+    "Árvore de Decisão|auc": [
+      0.825,
+      0.953
+    ],
+    "Naive Bayes|acuracia": [
+      0.79,
+      0.944
+    ],
+    "Naive Bayes|recall": [
+      0.601,
+      0.952
+    ],
+    "Naive Bayes|auc": [
+      0.882,
+      0.985
+    ],
+    "KNN|acuracia": [
+      0.808,
+      0.942
+    ],
+    "KNN|recall": [
+      0.5,
+      0.908
+    ],
+    "KNN|auc": [
+      0.817,
+      0.977
+    ]
+  },
+  "subgrupos": [
+    {
+      "grupo": "mulheres",
+      "n": 312,
+      "prop_recorrencia": 0.21153846153846154,
+      "modelo": "Árvore de Decisão",
+      "acuracia": 0.8782051282051282,
+      "recall": 0.8939393939393939
+    },
+    {
+      "grupo": "mulheres",
+      "n": 312,
+      "prop_recorrencia": 0.21153846153846154,
+      "modelo": "Naive Bayes",
+      "acuracia": 0.8717948717948718,
+      "recall": 0.7424242424242424
+    },
+    {
+      "grupo": "mulheres",
+      "n": 312,
+      "prop_recorrencia": 0.21153846153846154,
+      "modelo": "KNN",
+      "acuracia": 0.8846153846153846,
+      "recall": 0.6363636363636364
+    },
+    {
+      "grupo": "homens",
+      "n": 71,
+      "prop_recorrencia": 0.5915492957746479,
+      "modelo": "Árvore de Decisão",
+      "acuracia": 0.8309859154929577,
+      "recall": 0.8809523809523809
+    },
+    {
+      "grupo": "homens",
+      "n": 71,
+      "prop_recorrencia": 0.5915492957746479,
+      "modelo": "Naive Bayes",
+      "acuracia": 0.8169014084507042,
+      "recall": 0.8571428571428571
+    },
+    {
+      "grupo": "homens",
+      "n": 71,
+      "prop_recorrencia": 0.5915492957746479,
+      "modelo": "KNN",
+      "acuracia": 0.8591549295774648,
+      "recall": 0.8333333333333334
+    },
+    {
+      "grupo": "idade < 55",
+      "n": 305,
+      "prop_recorrencia": 0.21311475409836064,
+      "modelo": "Árvore de Decisão",
+      "acuracia": 0.8754098360655738,
+      "recall": 0.8923076923076924
+    },
+    {
+      "grupo": "idade < 55",
+      "n": 305,
+      "prop_recorrencia": 0.21311475409836064,
+      "modelo": "Naive Bayes",
+      "acuracia": 0.8688524590163934,
+      "recall": 0.7384615384615385
+    },
+    {
+      "grupo": "idade < 55",
+      "n": 305,
+      "prop_recorrencia": 0.21311475409836064,
+      "modelo": "KNN",
+      "acuracia": 0.8918032786885246,
+      "recall": 0.6923076923076923
+    },
+    {
+      "grupo": "idade >= 55",
+      "n": 78,
+      "prop_recorrencia": 0.5512820512820513,
+      "modelo": "Árvore de Decisão",
+      "acuracia": 0.8461538461538461,
+      "recall": 0.8837209302325582
+    },
+    {
+      "grupo": "idade >= 55",
+      "n": 78,
+      "prop_recorrencia": 0.5512820512820513,
+      "modelo": "Naive Bayes",
+      "acuracia": 0.8333333333333334,
+      "recall": 0.8604651162790697
+    },
+    {
+      "grupo": "idade >= 55",
+      "n": 78,
+      "prop_recorrencia": 0.5512820512820513,
+      "modelo": "KNN",
+      "acuracia": 0.8333333333333334,
+      "recall": 0.7441860465116279
+    }
+  ],
+  "estabilidade_arvore": {
+    "raiz": {
+      "risco": 0.98,
+      "adenopatia": 0.015,
+      "N": 0.005
+    },
+    "variaveis_usadas": {
+      "idade + risco": 0.27,
+      "risco + sexo": 0.12,
+      "patologia + risco": 0.08,
+      "T + risco": 0.075,
+      "fumante + idade + risco": 0.055
+    }
+  },
+  "divisao_80_20_vs_70_30": {
+    "KNN|70/30": {
+      "acc": 0.878,
+      "acc_dp": 0.031,
+      "recall": 0.709,
+      "f1": 0.763,
+      "auc": 0.907
+    },
+    "KNN|80/20": {
+      "acc": 0.873,
+      "acc_dp": 0.041,
+      "recall": 0.705,
+      "f1": 0.757,
+      "auc": 0.914
+    },
+    "Naive Bayes|70/30": {
+      "acc": 0.866,
+      "acc_dp": 0.028,
+      "recall": 0.801,
+      "f1": 0.769,
+      "auc": 0.942
+    },
+    "Naive Bayes|80/20": {
+      "acc": 0.871,
+      "acc_dp": 0.038,
+      "recall": 0.826,
+      "f1": 0.786,
+      "auc": 0.945
+    },
+    "Árvore de Decisão|70/30": {
+      "acc": 0.865,
+      "acc_dp": 0.033,
+      "recall": 0.808,
+      "f1": 0.768,
+      "auc": 0.897
+    },
+    "Árvore de Decisão|80/20": {
+      "acc": 0.867,
+      "acc_dp": 0.035,
+      "recall": 0.839,
+      "f1": 0.783,
+      "auc": 0.901
+    }
+  }
+}

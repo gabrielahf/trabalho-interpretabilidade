@@ -1,0 +1,15 @@
+{
+  "Árvore de Decisão": {
+    "criterion": "entropy",
+    "max_depth": 2,
+    "min_samples_leaf": 20
+  },
+  "Naive Bayes": {
+    "alpha": 1.0
+  },
+  "KNN": {
+    "metric": "euclidean",
+    "n_neighbors": 7,
+    "weights": "uniform"
+  }
+}

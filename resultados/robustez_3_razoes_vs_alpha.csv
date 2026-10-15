@@ -1,0 +1,12 @@
+,n_treino,n_com_recorrencia,alpha=0.1,alpha=0.5,alpha=1.0,alpha=2.0
+risco=alto,25,25,640.73,129.1,65.15,33.16
+M=M1,12,12,309.1,63.51,32.8,17.42
+T=T4a,13,13,333.47,67.42,34.17,17.55
+estadio=IVB,7,7,180.99,37.71,19.78,10.78
+adenopatia=extensa,6,6,155.39,32.57,17.2,9.47
+adenopatia=bilateral,26,22,13.73,12.53,11.3,9.47
+N=N1b,74,56,7.91,7.73,7.52,7.12
+fumante=sim,39,26,5.09,4.99,4.87,4.65
+sexo=masculino,54,33,4.01,3.96,3.9,3.79
+risco=baixo,201,11,0.15,0.15,0.16,0.17
+patologia=micropapilífero,42,0,0.01,0.03,0.06,0.11

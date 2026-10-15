@@ -1,0 +1,51 @@
+variavel,categoria,n_treino,P(x|sem recorrência),P(x|com recorrência),razao_verossimilhanca
+sexo,feminino,252,0.901,0.614,0.681
+sexo,masculino,54,0.099,0.386,3.899
+fumante,não,267,0.937,0.693,0.74
+fumante,sim,39,0.063,0.307,4.865
+hist_fumo,não,286,0.946,0.886,0.937
+hist_fumo,sim,20,0.054,0.114,2.102
+hist_radioterapia,não,301,0.991,0.943,0.952
+hist_radioterapia,sim,5,0.009,0.057,6.307
+funcao_tireoide,normal,266,0.844,0.857,1.015
+funcao_tireoide,hiper clínico,15,0.062,0.033,0.53
+funcao_tireoide,hiper subclínico,2,0.013,0.011,0.824
+funcao_tireoide,hipo clínico,11,0.044,0.033,0.742
+funcao_tireoide,hipo subclínico,12,0.036,0.066,1.854
+exame_fisico,normal,7,0.027,0.033,1.236
+exame_fisico,nódulo único esq.,65,0.213,0.209,0.979
+exame_fisico,nódulo único dir.,109,0.391,0.253,0.646
+exame_fisico,multinodular,120,0.342,0.495,1.445
+exame_fisico,bócio difuso,5,0.027,0.011,0.412
+adenopatia,não,222,0.876,0.283,0.323
+adenopatia,direita,37,0.071,0.25,3.531
+adenopatia,esquerda,13,0.022,0.109,4.913
+adenopatia,bilateral,26,0.022,0.25,11.3
+adenopatia,posterior,2,0.004,0.033,7.37
+adenopatia,extensa,6,0.004,0.076,17.196
+patologia,micropapilífero,42,0.192,0.011,0.058
+patologia,papilífero,229,0.705,0.811,1.15
+patologia,folicular,22,0.058,0.122,2.106
+patologia,células de Hürthle,13,0.045,0.056,1.244
+focalidade,unifocal,193,0.739,0.352,0.477
+focalidade,multifocal,113,0.261,0.648,2.479
+risco,baixo,201,0.857,0.135,0.157
+risco,intermediário,80,0.139,0.573,4.122
+risco,alto,25,0.004,0.292,65.146
+T,T1a,43,0.189,0.022,0.114
+T,T1b,33,0.128,0.065,0.505
+T,T2,122,0.471,0.183,0.388
+T,T3a,75,0.189,0.366,1.93
+T,T3b,14,0.013,0.14,10.577
+T,T4a,13,0.004,0.151,34.172
+T,T4b,6,0.004,0.075,17.086
+N,N0,216,0.865,0.281,0.325
+N,N1a,16,0.049,0.079,1.594
+N,N1b,74,0.085,0.64,7.517
+M,M0,294,0.995,0.852,0.856
+M,M1,12,0.005,0.148,32.795
+estadio,I,266,0.956,0.582,0.61
+estadio,II,27,0.031,0.242,7.771
+estadio,III,3,0.004,0.044,9.89
+estadio,IVA,3,0.004,0.044,9.89
+estadio,IVB,7,0.004,0.088,19.78

@@ -1,0 +1,4 @@
+modelo,acc_com_fumo,acc_sem_fumo,auc_com_fumo,auc_sem_fumo
+Árvore de Decisão,0.869,0.869,0.898,0.9
+Naive Bayes,0.864,0.872,0.941,0.941
+KNN,0.882,0.881,0.913,0.907

@@ -1,0 +1,4 @@
+,acc_cv_com_identicas,acc_cv_sem_identicas
+Árvore de Decisão,0.869,0.863
+Naive Bayes,0.864,0.856
+KNN,0.882,0.87

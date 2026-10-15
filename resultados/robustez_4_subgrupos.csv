@@ -1,0 +1,13 @@
+grupo,n,prop_recorrencia,modelo,acuracia,recall
+mulheres,312,0.212,Árvore de Decisão,0.878,0.894
+mulheres,312,0.212,Naive Bayes,0.872,0.742
+mulheres,312,0.212,KNN,0.885,0.636
+homens,71,0.592,Árvore de Decisão,0.831,0.881
+homens,71,0.592,Naive Bayes,0.817,0.857
+homens,71,0.592,KNN,0.859,0.833
+idade < 55,305,0.213,Árvore de Decisão,0.875,0.892
+idade < 55,305,0.213,Naive Bayes,0.869,0.738
+idade < 55,305,0.213,KNN,0.892,0.692
+idade >= 55,78,0.551,Árvore de Decisão,0.846,0.884
+idade >= 55,78,0.551,Naive Bayes,0.833,0.86
+idade >= 55,78,0.551,KNN,0.833,0.744
