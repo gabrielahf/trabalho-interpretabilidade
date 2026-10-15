@@ -2,8 +2,8 @@
 idade,3.075
 sexo,1.361
 fumante,1.582
-hist_fumo,-0.065
-hist_radioterapia,-0.049
+historico_fumo,-0.065
+historico_radioterapia,-0.049
 funcao_tireoide,0.015
 exame_fisico,-0.022
 adenopatia,-1.131

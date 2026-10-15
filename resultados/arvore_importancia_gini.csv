@@ -2,8 +2,8 @@
 risco,0.9662052953684678
 sexo,0.03379470463153216
 idade,0.0
-hist_fumo,0.0
-hist_radioterapia,0.0
+historico_fumo,0.0
+historico_radioterapia,0.0
 funcao_tireoide,0.0
 fumante,0.0
 exame_fisico,0.0

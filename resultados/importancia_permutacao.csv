@@ -2,8 +2,8 @@
 idade,0.0,0.0059,0.0206
 sexo,0.0162,0.0096,0.0344
 fumante,0.0,-0.0012,0.0007
-hist_fumo,0.0,-0.0006,-0.0007
-hist_radioterapia,0.0,0.0002,0.0001
+historico_fumo,0.0,-0.0006,-0.0007
+historico_radioterapia,0.0,0.0002,0.0001
 funcao_tireoide,0.0,-0.0016,-0.0021
 exame_fisico,0.0,-0.0018,0.0131
 adenopatia,0.0,0.0121,0.0133

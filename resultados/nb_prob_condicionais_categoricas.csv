@@ -3,10 +3,10 @@ sexo,feminino,252,0.901,0.614,0.681
 sexo,masculino,54,0.099,0.386,3.899
 fumante,não,267,0.937,0.693,0.74
 fumante,sim,39,0.063,0.307,4.865
-hist_fumo,não,286,0.946,0.886,0.937
-hist_fumo,sim,20,0.054,0.114,2.102
-hist_radioterapia,não,301,0.991,0.943,0.952
-hist_radioterapia,sim,5,0.009,0.057,6.307
+historico_fumo,não,286,0.946,0.886,0.937
+historico_fumo,sim,20,0.054,0.114,2.102
+historico_radioterapia,não,301,0.991,0.943,0.952
+historico_radioterapia,sim,5,0.009,0.057,6.307
 funcao_tireoide,normal,266,0.844,0.857,1.015
 funcao_tireoide,hiper clínico,15,0.062,0.033,0.53
 funcao_tireoide,hiper subclínico,2,0.013,0.011,0.824

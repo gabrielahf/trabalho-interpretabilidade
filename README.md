@@ -38,15 +38,23 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-**4. Rodar o script**
+**4. Rodar o projeto**
 
 ```bash
-python trabalho_interpretabilidade.py
+python main.py
 ```
 
-A execução leva cerca de 3 minutos. A parte mais lenta é a comparação entre as divisões 80/20 e 70/30, no fim do script. Durante a execução, o script imprime as métricas, as regras da árvore, as probabilidades do Naive Bayes e os resultados de cada verificação.
+A execução leva cerca de 3 minutos. A parte mais lenta é a comparação entre as divisões 80/20 e 70/30, no fim da execução. Durante a execução, o programa imprime as métricas, as regras da árvore, as probabilidades do Naive Bayes e os resultados de cada verificação.
 
-**5. Ver os resultados**
+**5. (Opcional) Rodar os testes**
+
+```bash
+python -m unittest discover tests
+```
+
+Os testes verificam o Naive Bayes misto implementado no projeto.
+
+**6. Ver os resultados**
 
 Ao terminar, as figuras ficam em `figuras/` e as tabelas em `resultados/`. Se quiser comparar com a execução original, a saída completa do terminal está em `resultados/log_execucao.txt`. A semente aleatória é fixa (42), então os números devem ser os mesmos.
 
@@ -56,26 +64,31 @@ Ao terminar, as figuras ficam em `figuras/` e as tabelas em `resultados/`. Se qu
 
 | Pasta ou arquivo | Função |
 |---|---|
-| `trabalho_interpretabilidade.py` | Código completo e comentado. Carrega os dados, faz o pré-processamento, treina os três modelos, avalia, gera as análises de interpretabilidade e as verificações de robustez. |
+| `main.py` | Ponto de entrada. Executa as etapas do trabalho em ordem e salva os resultados. |
+| `src/config.py` | Configurações: caminhos, semente, nomes e categorias das colunas, grades de hiperparâmetros e cores. |
+| `src/dados.py` | Etapa 1: carrega, traduz e codifica o dataset e faz a divisão treino/teste. |
+| `src/modelos.py` | Naive Bayes misto, criação dos três modelos e busca de hiperparâmetros. |
+| `src/avaliacao.py` | Métricas, comparação treino × validação × teste e curvas de validação e de aprendizado. |
+| `src/interpretabilidade.py` | Etapas 3 e 4: árvore, probabilidades do NB, permutação, SHAP, LIME, caso exemplo e rankings. |
+| `src/robustez.py` | Etapa 5: vazamento, linhas idênticas, calibração, fumo × sexo, categorias raras e generalização. |
+| `src/graficos.py` | Todas as funções que geram as figuras. |
+| `src/saida.py` | Funções para salvar figuras, tabelas e arquivos JSON. |
+| `tests/` | Testes unitários do Naive Bayes misto. |
 | `requirements.txt` | Bibliotecas necessárias: scikit-learn, pandas, numpy, scipy, matplotlib, seaborn, shap e lime. |
-| `data/` | Dataset `Thyroid_Diff.csv` da UCI. Se a pasta não existir, o script baixa o arquivo automaticamente. |
-| `figuras/` | Todos os gráficos gerados pelo script (lista abaixo). |
-| `resultados/` | Todas as tabelas e números gerados pelo script (lista abaixo). |
+| `data/` | Dataset `Thyroid_Diff.csv` da UCI. Se a pasta não existir, o programa baixa o arquivo automaticamente. |
+| `figuras/` | Gráficos gerados (lista abaixo). |
+| `resultados/` | Tabelas e números gerados (lista abaixo). |
 | `.gitignore` | Arquivos que não vão para o repositório (ambiente virtual e materiais de entrega). |
 
-O script está dividido nas etapas do enunciado, marcadas por comentários:
+O `main.py` chama uma função por etapa do enunciado:
 
-| Etapa no código | O que faz |
+| Função em `main.py` | O que faz |
 |---|---|
-| Etapa 1: Dados | Baixa e carrega o dataset, traduz as colunas e categorias e gera os gráficos exploratórios. |
-| Etapa 2: Pré-processamento e treinamento | Divide em 80/20, codifica as categorias, padroniza a idade, define o Naive Bayes misto, escolhe os hiperparâmetros por validação cruzada e avalia os modelos. |
-| Etapa 3a: Árvore de Decisão | Regras, desenho da árvore e importância de Gini. |
-| Etapa 3b: Naive Bayes | Prioris, probabilidades condicionais e razões de verossimilhança. |
-| Etapa 3c: Ferramentas agnósticas | Importância por permutação e SHAP nos três modelos. |
-| Etapa 3d: Explicação local | Caso exemplo: caminho na árvore, decomposição do NB, vizinhos do KNN, SHAP e LIME. |
-| Etapa 4: Comparação | Rankings de importância dos três modelos e correlação entre eles. |
-| Experimento de vazamento | Mostra o que acontece se a variável "resposta ao tratamento" for usada. |
-| Etapa 5: Robustez | Calibração, fumo × sexo, categorias raras, 50 divisões, subgrupos, estabilidade da árvore e 80/20 × 70/30. |
+| `etapa_1_dados` | Carrega e traduz o dataset e gera os gráficos exploratórios. |
+| `etapa_2_treinamento` | Divide em 80/20, treina os três modelos com validação cruzada, gera as curvas de over/underfitting e avalia no teste. |
+| `etapa_3_interpretabilidade` | Árvore (regras e Gini), Naive Bayes (probabilidades condicionais), permutação e SHAP nos três modelos e explicação do caso exemplo (caminho na árvore, contribuições do NB, vizinhos do KNN, SHAP e LIME). |
+| `etapa_4_comparacao` | Rankings de importância dos três modelos e correlação entre eles. |
+| `etapa_5_robustez` | Experimento de vazamento, linhas idênticas, calibração, fumo × sexo, categorias raras, 50 divisões, subgrupos, estabilidade da árvore e 80/20 × 70/30. |
 
 ### Arquivos em `figuras/`
 
